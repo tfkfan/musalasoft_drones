@@ -8,8 +8,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.domain.Persistable;
 
 /**
@@ -17,7 +15,6 @@ import org.springframework.data.domain.Persistable;
  */
 @Entity
 @Table(name = "drone")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(value = { "new" })
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Drone implements Serializable, Persistable<String> {
@@ -43,15 +40,21 @@ public class Drone implements Serializable, Persistable<String> {
     private boolean isPersisted;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "drone")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "drone" }, allowSetters = true)
-    private Set<Medication> medications = new HashSet<>();
+    private Set<MedicationLoad> medicationLoads = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "drones" }, allowSetters = true)
     private Model model;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Set<MedicationLoad> getMedicationLoads() {
+        return medicationLoads;
+    }
+
+    public void setMedicationLoads(Set<MedicationLoad> medicationLoads) {
+        this.medicationLoads = medicationLoads;
+    }
 
     public String getId() {
         return this.id;
@@ -119,37 +122,6 @@ public class Drone implements Serializable, Persistable<String> {
 
     public Drone setIsPersisted() {
         this.isPersisted = true;
-        return this;
-    }
-
-    public Set<Medication> getMedications() {
-        return this.medications;
-    }
-
-    public void setMedications(Set<Medication> medications) {
-        if (this.medications != null) {
-            this.medications.forEach(i -> i.setDrone(null));
-        }
-        if (medications != null) {
-            medications.forEach(i -> i.setDrone(this));
-        }
-        this.medications = medications;
-    }
-
-    public Drone medications(Set<Medication> medications) {
-        this.setMedications(medications);
-        return this;
-    }
-
-    public Drone addMedication(Medication medication) {
-        this.medications.add(medication);
-        medication.setDrone(this);
-        return this;
-    }
-
-    public Drone removeMedication(Medication medication) {
-        this.medications.remove(medication);
-        medication.setDrone(null);
         return this;
     }
 

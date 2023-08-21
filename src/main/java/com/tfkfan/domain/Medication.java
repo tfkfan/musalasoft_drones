@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import java.util.Set;
 import org.springframework.data.domain.Persistable;
 
 /**
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Persistable;
  */
 @Entity
 @Table(name = "medication")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @JsonIgnoreProperties(value = { "new" })
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Medication implements Serializable, Persistable<String> {
@@ -39,9 +38,16 @@ public class Medication implements Serializable, Persistable<String> {
     @Transient
     private boolean isPersisted;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "medications", "model" }, allowSetters = true)
-    private Drone drone;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "medication")
+    private Set<MedicationLoad> medicationLoads = new HashSet<>();
+
+    public Set<MedicationLoad> getMedicationLoads() {
+        return medicationLoads;
+    }
+
+    public void setMedicationLoads(Set<MedicationLoad> medicationLoads) {
+        this.medicationLoads = medicationLoads;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -116,19 +122,6 @@ public class Medication implements Serializable, Persistable<String> {
 
     public Medication setIsPersisted() {
         this.isPersisted = true;
-        return this;
-    }
-
-    public Drone getDrone() {
-        return this.drone;
-    }
-
-    public void setDrone(Drone drone) {
-        this.drone = drone;
-    }
-
-    public Medication drone(Drone drone) {
-        this.setDrone(drone);
         return this;
     }
 

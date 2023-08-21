@@ -1,10 +1,9 @@
 package com.tfkfan.web.rest;
 
 import com.tfkfan.service.DroneService;
-import com.tfkfan.service.MedicationService;
 import com.tfkfan.service.dto.DroneDTO;
 import com.tfkfan.service.dto.LoadDTO;
-import com.tfkfan.service.dto.MedicationDTO;
+import com.tfkfan.service.dto.MedicationLoadDTO;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,11 +30,9 @@ public class DroneResource {
     private String applicationName;
 
     private final DroneService droneService;
-    private final MedicationService medicationService;
 
-    public DroneResource(DroneService droneService, MedicationService medicationService) {
+    public DroneResource(DroneService droneService) {
         this.droneService = droneService;
-        this.medicationService = medicationService;
     }
 
     @PostMapping
@@ -49,9 +46,9 @@ public class DroneResource {
     }
 
     @PostMapping("/load/{id}")
-    public ResponseEntity<DroneDTO> loadDrone(@Valid @RequestBody LoadDTO dto, @PathVariable String id) {
+    public ResponseEntity<DroneDTO> loadDrone(@PathVariable String id, @Valid @RequestBody LoadDTO dto) {
         log.debug("REST request to load Drone {} : {}", id, dto);
-        DroneDTO result = medicationService.load(id, dto);
+        DroneDTO result = droneService.load(id, dto);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -59,8 +56,8 @@ public class DroneResource {
     }
 
     @GetMapping("/load/{id}")
-    public ResponseEntity<List<MedicationDTO>> getDroneBurden(@PathVariable String id) {
-        return ResponseEntity.ok().body(medicationService.findByDroneId(id));
+    public ResponseEntity<List<MedicationLoadDTO>> getDroneBurden(@PathVariable String id) {
+        return ResponseEntity.ok().body(droneService.findByDroneId(id));
     }
 
     @GetMapping("/available")
@@ -68,8 +65,8 @@ public class DroneResource {
         return ResponseEntity.ok().body(droneService.findAllAvailable());
     }
 
-    @GetMapping("/battery/{id}")
-    public ResponseEntity<Integer> getDroneBattery(@PathVariable String id) {
-        return ResponseEntity.ok().body(droneService.findOneRequired(id).getBatteryCharge());
+    @GetMapping("/charge/{id}")
+    public ResponseEntity<Integer> getDroneBatteryCharge(@PathVariable String id) {
+        return ResponseEntity.ok().body(droneService.getDrone(id).getBatteryCharge());
     }
 }

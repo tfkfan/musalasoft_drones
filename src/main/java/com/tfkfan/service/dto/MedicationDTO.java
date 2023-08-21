@@ -20,8 +20,6 @@ public class MedicationDTO implements Serializable {
 
     private String picture;
 
-    private DroneDTO drone;
-
     public String getCode() {
         return code;
     }
@@ -54,14 +52,6 @@ public class MedicationDTO implements Serializable {
         this.picture = picture;
     }
 
-    public DroneDTO getDrone() {
-        return drone;
-    }
-
-    public void setDrone(DroneDTO drone) {
-        this.drone = drone;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -91,7 +81,6 @@ public class MedicationDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", weight=" + getWeight() +
             ", picture='" + getPicture() + "'" +
-            ", drone=" + getDrone() +
             "}";
     }
 }

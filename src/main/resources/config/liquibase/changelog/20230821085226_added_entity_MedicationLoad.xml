@@ -7,25 +7,40 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Medication.
+        Added the entity MedicationLoad.
     -->
-    <changeSet id="20230821085226-1" author="jhipster">
-        <createTable tableName="medication">
-            <column name="code" type="varchar(255)">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="weight" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="picture" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
 
-            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+    <changeSet id="20230821085226-1" author="jhipster">
+        <createTable tableName="medication_load">
+            <column name="medication_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="drone_id" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="medication_quantity" type="BIGINT" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+
+        <addPrimaryKey columnNames="drone_id, medication_code" tableName="medication_load"/>
+
+    </changeSet>
+
+    <changeSet id="20230821085226-2" author="jhipster">
+        <addForeignKeyConstraint baseColumnNames="drone_id"
+                                 baseTableName="medication_load"
+                                 constraintName="fk_medication_load_drone_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="drone"
+        />
+
+        <addForeignKeyConstraint baseColumnNames="medication_code"
+                                 baseTableName="medication_load"
+                                 constraintName="fk_medication_load_medication_id"
+                                 referencedColumnNames="code"
+                                 referencedTableName="medication"
+        />
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -40,10 +55,10 @@
     -->
     <changeSet id="20230821085226-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/medication.csv"
-                  separator=";"
-                  tableName="medication"
-                  usePreparedStatements="true">
+            file="config/liquibase/fake-data/medication.csv"
+            separator=";"
+            tableName="medication"
+            usePreparedStatements="true">
             <column name="code" type="string"/>
             <column name="name" type="string"/>
             <column name="weight" type="numeric"/>

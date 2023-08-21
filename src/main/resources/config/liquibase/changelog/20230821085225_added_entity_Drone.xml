@@ -30,6 +30,16 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="20230821085225-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="model_id"
+                                 baseTableName="drone"
+                                 constraintName="fk_drone__model_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="model"
+        />
+    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--
