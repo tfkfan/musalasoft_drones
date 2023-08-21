@@ -37,12 +37,6 @@ spring:
       enabled: false
     livereload:
       enabled: false
-  cloud:
-    consul:
-      discovery:
-        prefer-ip-address: true
-      host: localhost
-      port: 8500
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/DroneFactory

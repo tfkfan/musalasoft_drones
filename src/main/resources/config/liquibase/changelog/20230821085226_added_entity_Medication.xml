@@ -23,7 +23,7 @@
             <column name="picture" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="code_id" type="varchar(100)">
+            <column name="drone_id" type="varchar(100)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

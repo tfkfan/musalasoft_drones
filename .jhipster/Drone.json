@@ -36,14 +36,15 @@
   "relationships": [
     {
       "otherEntityName": "medication",
-      "otherEntityRelationshipName": "code",
-      "relationshipName": "id",
+      "otherEntityRelationshipName": "drone",
+      "relationshipName": "medication",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "model",
-      "relationshipName": "id",
+      "otherEntityRelationshipName": "drone",
+      "relationshipName": "model",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"
     }

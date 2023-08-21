@@ -34,10 +34,10 @@ entity Medication {
 }
 
 relationship OneToMany {
-  Model to Drone{id}
+  Model to Drone
 }
 relationship OneToMany {
-  Drone{id} to Medication{code}
+  Drone to Medication
 }
 
 paginate * with pagination

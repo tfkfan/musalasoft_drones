@@ -39,8 +39,8 @@ public class Medication implements Serializable, Persistable<String> {
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "ids", "id" }, allowSetters = true)
-    private Drone code;
+    @JsonIgnoreProperties(value = { "medications", "model" }, allowSetters = true)
+    private Drone drone;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -118,16 +118,16 @@ public class Medication implements Serializable, Persistable<String> {
         return this;
     }
 
-    public Drone getCode() {
-        return this.code;
+    public Drone getDrone() {
+        return this.drone;
     }
 
-    public void setCode(Drone drone) {
-        this.code = drone;
+    public void setDrone(Drone drone) {
+        this.drone = drone;
     }
 
-    public Medication code(Drone drone) {
-        this.setCode(drone);
+    public Medication drone(Drone drone) {
+        this.setDrone(drone);
         return this;
     }
 

@@ -11,7 +11,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface DroneMapper extends EntityMapper<DroneDTO, Drone> {
-    @Mapping(target = "id", source = "id", qualifiedByName = "modelId")
+    @Mapping(target = "model", source = "model", qualifiedByName = "modelId")
     DroneDTO toDto(Drone s);
 
     @Named("modelId")

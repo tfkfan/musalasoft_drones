@@ -20,15 +20,17 @@ logging:
     org.hibernate.SQL: DEBUG
     com.tfkfan: DEBUG
 
-management:
-  zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
-    tracing:
-      endpoint: http://localhost:9411/api/v2/spans
-  tracing:
-    sampling:
-      probability: 1.0 # report 100% of traces
+#management:
+#zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
+#tracing:
+#endpoint: http://localhost:9411/api/v2/spans
+#tracing:
+#sampling:
+# probability: 1.0 # report 100% of traces
 
 spring:
+  jmx:
+    enabled: false
   devtools:
     restart:
       enabled: true
@@ -38,22 +40,22 @@ spring:
   jackson:
     serialization:
       indent-output: true
-  cloud:
-    consul:
-      config:
-        fail-fast: false # if not in "prod" profile, do not force to use Spring Cloud Config
-        format: yaml
-        profile-separator: '-'
-      discovery:
-        prefer-ip-address: true
-        tags:
-          - profile=${spring.profiles.active}
-          - version=#project.version#
-          - git-version=${git.commit.id.describe:}
-          - git-commit=${git.commit.id.abbrev:}
-          - git-branch=${git.branch:}
-      host: localhost
-      port: 8500
+  #cloud:
+  #  consul:
+  #    config:
+  #      fail-fast: false # if not in "prod" profile, do not force to use Spring Cloud Config
+  #      format: yaml
+  #      profile-separator: '-'
+  #    discovery:
+  #      prefer-ip-address: true
+  #      tags:
+  #        - profile=${spring.profiles.active}
+  #        - version=#project.version#
+  #        - git-version=${git.commit.id.describe:}
+  #         - git-commit=${git.commit.id.abbrev:}
+  #         - git-branch=${git.branch:}
+  #     host: localhost
+  #     port: 8500
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/DroneFactory
@@ -65,13 +67,13 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-  messages:
-    cache-duration: PT1S # 1 second, see the ISO 8601 standard
-  thymeleaf:
-    cache: false
+  #messages:
+  #cache-duration: PT1S # 1 second, see the ISO 8601 standard
+  #thymeleaf:
+  #cache: false
 
 server:
-  port: 8081
+  port: 8080
 
 # ===================================================================
 # JHipster specific properties
@@ -80,10 +82,10 @@ server:
 # ===================================================================
 
 jhipster:
-  cache: # Cache configuration
-    hazelcast: # Hazelcast distributed cache
-      time-to-live-seconds: 3600
-      backup-count: 1
+  #cache: # Cache configuration
+  #hazelcast: # Hazelcast distributed cache
+  #time-to-live-seconds: 3600
+  #backup-count: 1
   # CORS is disabled by default on microservices, as you should access them through a gateway.
   # If you want to enable it, please uncomment the configuration below.
   # cors:

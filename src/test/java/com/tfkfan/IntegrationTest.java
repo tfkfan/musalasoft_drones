@@ -1,6 +1,5 @@
 package com.tfkfan;
 
-import com.tfkfan.DroneFactoryApp;
 import com.tfkfan.config.AsyncSyncConfiguration;
 import com.tfkfan.config.EmbeddedSQL;
 import java.lang.annotation.ElementType;

@@ -20,7 +20,7 @@ public class DroneDTO implements Serializable {
 
     private State state;
 
-    private ModelDTO id;
+    private ModelDTO model;
 
     public String getId() {
         return id;
@@ -54,12 +54,12 @@ public class DroneDTO implements Serializable {
         this.state = state;
     }
 
-    public ModelDTO getId() {
-        return id;
+    public ModelDTO getModel() {
+        return model;
     }
 
-    public void setId(ModelDTO id) {
-        this.id = id;
+    public void setModel(ModelDTO model) {
+        this.model = model;
     }
 
     @Override
@@ -67,11 +67,10 @@ public class DroneDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof DroneDTO)) {
+        if (!(o instanceof DroneDTO droneDTO)) {
             return false;
         }
 
-        DroneDTO droneDTO = (DroneDTO) o;
         if (this.id == null) {
             return false;
         }
@@ -91,7 +90,7 @@ public class DroneDTO implements Serializable {
             ", weight=" + getWeight() +
             ", batteryCharge=" + getBatteryCharge() +
             ", state='" + getState() + "'" +
-            ", id=" + getId() +
+            ", model=" + getModel() +
             "}";
     }
 }

@@ -21,7 +21,7 @@
   "relationships": [
     {
       "otherEntityName": "drone",
-      "otherEntityRelationshipName": "id",
+      "otherEntityRelationshipName": "model",
       "relationshipName": "drone",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"

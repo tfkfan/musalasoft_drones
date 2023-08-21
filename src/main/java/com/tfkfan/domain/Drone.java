@@ -41,17 +41,14 @@ public class Drone implements Serializable, Persistable<String> {
     @Transient
     private boolean isPersisted;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "code")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "drone")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "code" }, allowSetters = true)
-    private Set<Medication> ids = new HashSet<>();
+    @JsonIgnoreProperties(value = { "drone" }, allowSetters = true)
+    private Set<Medication> medications = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "code")
     @ManyToOne(fetch = FetchType.LAZY)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "drones" }, allowSetters = true)
-    private Model id;
+    private Model model;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -124,47 +121,47 @@ public class Drone implements Serializable, Persistable<String> {
         return this;
     }
 
-    public Set<Medication> getIds() {
-        return this.ids;
+    public Set<Medication> getMedications() {
+        return this.medications;
     }
 
-    public void setIds(Set<Medication> medications) {
-        if (this.ids != null) {
-            this.ids.forEach(i -> i.setCode(null));
+    public void setMedications(Set<Medication> medications) {
+        if (this.medications != null) {
+            this.medications.forEach(i -> i.setDrone(null));
         }
         if (medications != null) {
-            medications.forEach(i -> i.setCode(this));
+            medications.forEach(i -> i.setDrone(this));
         }
-        this.ids = medications;
+        this.medications = medications;
     }
 
-    public Drone ids(Set<Medication> medications) {
-        this.setIds(medications);
+    public Drone medications(Set<Medication> medications) {
+        this.setMedications(medications);
         return this;
     }
 
-    public Drone addId(Medication medication) {
-        this.ids.add(medication);
-        medication.setCode(this);
+    public Drone addMedication(Medication medication) {
+        this.medications.add(medication);
+        medication.setDrone(this);
         return this;
     }
 
-    public Drone removeId(Medication medication) {
-        this.ids.remove(medication);
-        medication.setCode(null);
+    public Drone removeMedication(Medication medication) {
+        this.medications.remove(medication);
+        medication.setDrone(null);
         return this;
     }
 
-    public Model getId() {
-        return this.id;
+    public Model getModel() {
+        return this.model;
     }
 
-    public void setId(Model model) {
-        this.id = model;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
-    public Drone id(Model model) {
-        this.setId(model);
+    public Drone model(Model model) {
+        this.setModel(model);
         return this;
     }
 

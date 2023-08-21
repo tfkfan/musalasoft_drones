@@ -24,14 +24,6 @@ springdoc:
   api-docs:
     enabled: false
 ---
-feign:
-  circuitbreaker:
-    enabled: true
-  # client:
-  #   config:
-  #     default:
-  #       connectTimeout: 5000
-  #       readTimeout: 5000
 management:
   endpoints:
     web:
@@ -68,45 +60,36 @@ management:
       mode: full
     env:
       enabled: true
-  health:
-    mail:
-      enabled: false # When using the MailService, configure an SMTP server and set this to true
-  prometheus:
-    metrics:
-      export:
-        enabled: true
-        step: 60
-    enable:
-      http: true
-      jvm: true
-      logback: true
-      process: true
-      system: true
-    distribution:
-      percentiles-histogram:
-        all: true
-      percentiles:
-        all: 0, 0.5, 0.75, 0.95, 0.99, 1.0
-    tags:
-      application: ${spring.application.name}
-    web:
-      server:
-        request:
-          autotime:
-            enabled: true
+  #health:
+  #  mail:
+  #    enabled: false # When using the MailService, configure an SMTP server and set this to true
+  #prometheus:
+  #  metrics:
+  #    export:
+  #      enabled: true
+  #      step: 60
+  #  enable:
+  #    http: true
+  #    jvm: true
+  #    logback: true
+  #    process: true
+  #    system: true
+  #  distribution:
+  #   percentiles-histogram:
+  #     all: true
+  #   percentiles:
+  #     all: 0, 0.5, 0.75, 0.95, 0.99, 1.0
+  #  tags:
+  #   application: ${spring.application.name}
+  #  web:
+  #    server:
+  #     request:
+  #       autotime:
+  #         enabled: true
 
 spring:
   application:
     name: DroneFactory
-  cloud:
-    consul:
-      discovery:
-        healthCheckPath: /management/health
-        instanceId: dronefactory:${spring.application.instance-id:${random.value}}
-        service-name: dronefactory
-      config:
-        watch:
-          enabled: false
   profiles:
     # The commented value for `active` can be replaced with valid Spring profiles to load.
     # Otherwise, it will be filled in by maven when building the JAR file
@@ -120,10 +103,6 @@ spring:
         #- tls
   jmx:
     enabled: false
-  data:
-    jpa:
-      repositories:
-        bootstrap-mode: deferred
   jpa:
     open-in-view: false
     properties:
@@ -131,8 +110,6 @@ spring:
       hibernate.type.preferred_instant_jdbc_type: TIMESTAMP
       hibernate.id.new_generator_mappings: true
       hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: true
-      hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
       # modify batch size as necessary
       hibernate.jdbc.batch_size: 25
@@ -140,17 +117,8 @@ spring:
       hibernate.order_updates: true
       hibernate.query.fail_on_pagination_over_collection_fetch: true
       hibernate.query.in_clause_parameter_padding: true
-      hibernate.cache.region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
-      hibernate.cache.use_minimal_puts: true
-      hibernate.cache.hazelcast.instance_name: DroneFactory
-      hibernate.cache.hazelcast.use_lite_member: true
     hibernate:
       ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-  messages:
-    basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
   mvc:
@@ -167,8 +135,8 @@ spring:
       thread-name-prefix: drone-factory-scheduling-
       pool:
         size: 2
-  thymeleaf:
-    mode: HTML
+  #thymeleaf:
+  #mode: HTML
   output:
     ansi:
       console-available: true

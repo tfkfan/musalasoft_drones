@@ -31,9 +31,9 @@ public class Model implements Serializable {
     @Column(name = "weight_limit")
     private Long weightLimit;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "model")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "ids", "id" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "medications", "model" }, allowSetters = true)
     private Set<Drone> drones = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -83,10 +83,10 @@ public class Model implements Serializable {
 
     public void setDrones(Set<Drone> drones) {
         if (this.drones != null) {
-            this.drones.forEach(i -> i.setId(null));
+            this.drones.forEach(i -> i.setModel(null));
         }
         if (drones != null) {
-            drones.forEach(i -> i.setId(this));
+            drones.forEach(i -> i.setModel(this));
         }
         this.drones = drones;
     }
@@ -98,13 +98,13 @@ public class Model implements Serializable {
 
     public Model addDrone(Drone drone) {
         this.drones.add(drone);
-        drone.setId(this);
+        drone.setModel(this);
         return this;
     }
 
     public Model removeDrone(Drone drone) {
         this.drones.remove(drone);
-        drone.setId(null);
+        drone.setModel(null);
         return this;
     }
 
