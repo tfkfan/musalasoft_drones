@@ -62,7 +62,6 @@ public class DroneServiceImpl implements DroneService {
         log.debug("Request to save Drone : {}", droneDTO);
         Drone drone = droneMapper.toEntity(droneDTO);
         drone.setState(State.IDLE);
-        drone.setWeight(0L);
         drone = droneRepository.save(drone);
         return droneMapper.toDto(drone);
     }
@@ -86,7 +85,15 @@ public class DroneServiceImpl implements DroneService {
                 loadDTO
                     .getMedicationLoads()
                     .stream()
-                    .map(e -> new MedicationLoad(drone, medicationMapper.toEntity(e.getMedication()), e.getQuantity()))
+                    .map(e ->
+                        medicationLoadRepository.save(
+                            new MedicationLoad(
+                                drone,
+                                medicationRepository.save(medicationMapper.toEntity(e.getMedication())),
+                                e.getQuantity()
+                            )
+                        )
+                    )
                     .toList()
             );
 

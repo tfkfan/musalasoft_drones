@@ -40,7 +40,6 @@ management:
           - loggers
           - prometheus
           - threaddump
-          - caches
           - liquibase
   endpoint:
     health:

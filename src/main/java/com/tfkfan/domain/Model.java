@@ -26,10 +26,10 @@ public class Model implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "weight_limit")
+    @Column(name = "weight_limit", nullable = false)
     private Long weightLimit;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "model")

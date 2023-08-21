@@ -15,16 +15,16 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="weight" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="battery_charge" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="state" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="model_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -34,7 +34,7 @@
 
         <addForeignKeyConstraint baseColumnNames="model_id"
                                  baseTableName="drone"
-                                 constraintName="fk_drone__model_id"
+                                 constraintName="fk_drone_model_id"
                                  referencedColumnNames="id"
                                  referencedTableName="model"
         />

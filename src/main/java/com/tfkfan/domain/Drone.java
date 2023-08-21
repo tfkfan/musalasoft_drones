@@ -26,14 +26,14 @@ public class Drone implements Serializable, Persistable<String> {
     @Column(name = "id", length = 100)
     private String id;
 
-    @Column(name = "weight")
+    @Column(name = "weight", nullable = false)
     private Long weight;
 
-    @Column(name = "battery_charge")
+    @Column(name = "battery_charge", nullable = false)
     private Integer batteryCharge;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "state")
+    @Column(name = "state", nullable = false)
     private State state;
 
     @Transient

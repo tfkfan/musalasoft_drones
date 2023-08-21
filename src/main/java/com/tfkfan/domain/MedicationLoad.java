@@ -28,7 +28,7 @@ public class MedicationLoad implements Serializable {
     @MapsId("medicationCode")
     private Medication medication;
 
-    @Column(name = "medication_quantity")
+    @Column(name = "medication_quantity", nullable = false)
     private Long medicationQuantity;
 
     public MedicationLoad() {}

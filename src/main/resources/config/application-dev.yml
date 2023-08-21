@@ -19,6 +19,7 @@ logging:
     tech.jhipster: DEBUG
     org.hibernate.SQL: DEBUG
     com.tfkfan: DEBUG
+    javax.management.remote.rmi: INFO
 
 #management:
 #zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies

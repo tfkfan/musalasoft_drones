@@ -22,17 +22,17 @@ public class Medication implements Serializable, Persistable<String> {
 
     @Pattern(regexp = "^[A-Z0-9_]+$")
     @Id
-    @Column(name = "code")
+    @Column(name = "code", nullable = false)
     private String code;
 
     @Pattern(regexp = "^[a-zA-Z_0-9-]+$")
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "weight")
+    @Column(name = "weight", nullable = false)
     private Long weight;
 
-    @Column(name = "picture")
+    @Column(name = "picture", nullable = false)
     private String picture;
 
     @Transient

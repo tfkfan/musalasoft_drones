@@ -11,13 +11,13 @@ import java.util.List;
 public class LoadDTO implements Serializable {
 
     @NotEmpty(message = "Add medications before loading to drone")
-    private List<MedicationLoadDTO> medicationLoads;
+    private List<DroneMedicationLoadDTO> medicationLoads;
 
-    public List<MedicationLoadDTO> getMedicationLoads() {
+    public List<DroneMedicationLoadDTO> getMedicationLoads() {
         return medicationLoads;
     }
 
-    public void setMedicationLoads(List<MedicationLoadDTO> medicationLoads) {
+    public void setMedicationLoads(List<DroneMedicationLoadDTO> medicationLoads) {
         this.medicationLoads = medicationLoads;
     }
 }
