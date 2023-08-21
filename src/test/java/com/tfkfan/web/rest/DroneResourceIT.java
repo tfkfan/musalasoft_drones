@@ -183,7 +183,7 @@ class DroneResourceIT {
 
         restDroneMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, droneDTO.getId())
+                put(ENTITY_API_URL_ID, droneDTO.getSerialNumber())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(droneDTO))
             )
@@ -210,7 +210,7 @@ class DroneResourceIT {
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restDroneMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, droneDTO.getId())
+                put(ENTITY_API_URL_ID, droneDTO.getSerialNumber())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(droneDTO))
             )
@@ -339,7 +339,7 @@ class DroneResourceIT {
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restDroneMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, droneDTO.getId())
+                patch(ENTITY_API_URL_ID, droneDTO.getSerialNumber())
                     .contentType("application/merge-patch+json")
                     .content(TestUtil.convertObjectToJsonBytes(droneDTO))
             )

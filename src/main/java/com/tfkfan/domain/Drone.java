@@ -30,6 +30,8 @@ public class Drone implements Serializable, Persistable<String> {
     private Long weight;
 
     @Column(name = "battery_charge", nullable = false)
+    @Max(100)
+    @Min(0)
     private Integer batteryCharge;
 
     @Enumerated(EnumType.STRING)

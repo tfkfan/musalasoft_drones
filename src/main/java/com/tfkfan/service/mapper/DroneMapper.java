@@ -9,5 +9,10 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface DroneMapper extends EntityMapper<DroneDTO, Drone> {
+    @Mapping(source = "id", target = "serialNumber")
     DroneDTO toDto(Drone s);
+
+    @Override
+    @Mapping(source = "serialNumber", target = "id")
+    Drone toEntity(DroneDTO dto);
 }

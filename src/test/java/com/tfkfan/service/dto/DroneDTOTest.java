@@ -11,14 +11,14 @@ class DroneDTOTest {
     void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(DroneDTO.class);
         DroneDTO droneDTO1 = new DroneDTO();
-        droneDTO1.setId("id1");
+        droneDTO1.setSerialNumber("id1");
         DroneDTO droneDTO2 = new DroneDTO();
         assertThat(droneDTO1).isNotEqualTo(droneDTO2);
-        droneDTO2.setId(droneDTO1.getId());
+        droneDTO2.setSerialNumber(droneDTO1.getSerialNumber());
         assertThat(droneDTO1).isEqualTo(droneDTO2);
-        droneDTO2.setId("id2");
+        droneDTO2.setSerialNumber("id2");
         assertThat(droneDTO1).isNotEqualTo(droneDTO2);
-        droneDTO1.setId(null);
+        droneDTO1.setSerialNumber(null);
         assertThat(droneDTO1).isNotEqualTo(droneDTO2);
     }
 }

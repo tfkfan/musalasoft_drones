@@ -23,6 +23,6 @@ public interface MedicationLoadMapper extends EntityMapper<MedicationLoadDTO, Me
 
     @Named("droneId")
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    @Mapping(target = "serialNumber", source = "id")
     DroneDTO toDtoDroneId(Drone drone);
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
 public class DroneDTO implements Serializable {
 
     @Size(min = 1, max = 100)
-    private String id;
+    private String serialNumber;
 
     private Long weight;
 
@@ -22,12 +22,12 @@ public class DroneDTO implements Serializable {
 
     private ModelDTO model;
 
-    public String getId() {
-        return id;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public Long getWeight() {
@@ -71,22 +71,22 @@ public class DroneDTO implements Serializable {
             return false;
         }
 
-        if (this.id == null) {
+        if (this.serialNumber == null) {
             return false;
         }
-        return Objects.equals(this.id, droneDTO.id);
+        return Objects.equals(this.serialNumber, droneDTO.serialNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id);
+        return Objects.hash(this.serialNumber);
     }
 
     // prettier-ignore
     @Override
     public String toString() {
         return "DroneDTO{" +
-            "id='" + getId() + "'" +
+            "id='" + getSerialNumber() + "'" +
             ", weight=" + getWeight() +
             ", batteryCharge=" + getBatteryCharge() +
             ", state='" + getState() + "'" +
