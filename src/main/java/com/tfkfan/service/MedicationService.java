@@ -1,6 +1,10 @@
 package com.tfkfan.service;
 
+import com.tfkfan.domain.Medication;
+import com.tfkfan.service.dto.DroneDTO;
+import com.tfkfan.service.dto.LoadDTO;
 import com.tfkfan.service.dto.MedicationDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +20,8 @@ public interface MedicationService {
      * @return the persisted entity.
      */
     MedicationDTO save(MedicationDTO medicationDTO);
+
+    DroneDTO load(String droneSerialNumber, LoadDTO loadDTO);
 
     /**
      * Updates a medication.
@@ -40,6 +46,8 @@ public interface MedicationService {
      * @return the list of entities.
      */
     Page<MedicationDTO> findAll(Pageable pageable);
+
+    List<MedicationDTO> findByDroneId(String id);
 
     /**
      * Get the "id" medication.

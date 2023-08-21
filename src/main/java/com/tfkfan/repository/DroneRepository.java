@@ -1,6 +1,8 @@
 package com.tfkfan.repository;
 
 import com.tfkfan.domain.Drone;
+import com.tfkfan.domain.enumeration.State;
+import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface DroneRepository extends JpaRepository<Drone, String> {}
+public interface DroneRepository extends JpaRepository<Drone, String> {
+    List<Drone> findAllByState(State state);
+}

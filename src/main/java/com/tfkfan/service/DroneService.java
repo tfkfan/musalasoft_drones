@@ -1,6 +1,9 @@
 package com.tfkfan.service;
 
+import com.tfkfan.domain.Drone;
 import com.tfkfan.service.dto.DroneDTO;
+import com.tfkfan.service.dto.LoadDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +18,7 @@ public interface DroneService {
      * @param droneDTO the entity to save.
      * @return the persisted entity.
      */
-    DroneDTO save(DroneDTO droneDTO);
+    DroneDTO register(DroneDTO droneDTO);
 
     /**
      * Updates a drone.
@@ -24,7 +27,7 @@ public interface DroneService {
      * @return the persisted entity.
      */
     DroneDTO update(DroneDTO droneDTO);
-
+    DroneDTO updateEntity(Drone drone);
     /**
      * Partially updates a drone.
      *
@@ -41,6 +44,7 @@ public interface DroneService {
      */
     Page<DroneDTO> findAll(Pageable pageable);
 
+    List<DroneDTO> findAllAvailable();
     /**
      * Get the "id" drone.
      *
@@ -48,6 +52,14 @@ public interface DroneService {
      * @return the entity.
      */
     Optional<DroneDTO> findOne(String id);
+
+    /**
+     * Get the "id" drone.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    DroneDTO findOneRequired(String id);
 
     /**
      * Delete the "id" drone.
