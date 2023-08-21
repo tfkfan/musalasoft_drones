@@ -1,5 +1,6 @@
 package com.tfkfan.service.impl;
 
+import com.tfkfan.config.ApplicationProperties;
 import com.tfkfan.domain.Model;
 import com.tfkfan.repository.ModelRepository;
 import com.tfkfan.service.ModelService;
@@ -26,15 +27,19 @@ public class ModelServiceImpl implements ModelService {
 
     private final ModelMapper modelMapper;
 
-    public ModelServiceImpl(ModelRepository modelRepository, ModelMapper modelMapper) {
+    private final ApplicationProperties applicationProperties;
+
+    public ModelServiceImpl(ModelRepository modelRepository, ModelMapper modelMapper, ApplicationProperties applicationProperties) {
         this.modelRepository = modelRepository;
         this.modelMapper = modelMapper;
+        this.applicationProperties = applicationProperties;
     }
 
     @Override
     public ModelDTO save(ModelDTO modelDTO) {
         log.debug("Request to save Model : {}", modelDTO);
         Model model = modelMapper.toEntity(modelDTO);
+        if (model.getWeightLimit() == null) model.setWeightLimit(applicationProperties.getDefaultModelWeightLimit());
         model = modelRepository.save(model);
         return modelMapper.toDto(model);
     }

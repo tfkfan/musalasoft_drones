@@ -79,27 +79,25 @@ public class DroneServiceImpl implements DroneService {
         drone.setState(State.LOADING);
         droneRepository.saveAndFlush(drone);
 
-        drone
-            .getMedicationLoads()
-            .addAll(
-                loadDTO
-                    .getMedicationLoads()
-                    .stream()
-                    .map(e ->
-                        medicationLoadRepository.save(
-                            new MedicationLoad(
-                                drone,
-                                medicationRepository.save(medicationMapper.toEntity(e.getMedication())),
-                                e.getQuantity()
-                            )
-                        )
+        drone.setMedicationLoads(
+            loadDTO
+                .getMedicationLoads()
+                .stream()
+                .map(load ->
+                    new MedicationLoad(
+                        drone,
+                        medicationRepository
+                            .findById(load.getMedication().getCode())
+                            .orElseGet(() -> medicationMapper.toEntityWithRequiredFields(load.getMedication(), true)),
+                        load.getQuantity()
                     )
-                    .toList()
-            );
+                )
+                .collect(Collectors.toSet())
+        );
 
         long currentWeight =
             drone.getWeight() +
-            drone.getMedicationLoads().stream().map(e -> e.getMedicationQuantity() * e.getMedication().getWeight()).reduce(0L, Long::sum);
+            drone.getMedicationLoads().stream().map(e -> e.getQuantity() * e.getMedication().getWeight()).reduce(0L, Long::sum);
 
         if (currentWeight > drone.getModel().getWeightLimit()) throw new RuntimeException("Drone is overloaded");
 

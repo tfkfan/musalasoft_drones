@@ -1,5 +1,6 @@
 package com.tfkfan.service.dto;
 
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ public class ModelDTO implements Serializable {
 
     private Long id;
 
+    @NotNull(message = "Title required")
     private String title;
 
     private Long weightLimit;
@@ -44,11 +46,10 @@ public class ModelDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ModelDTO)) {
+        if (!(o instanceof ModelDTO modelDTO)) {
             return false;
         }
 
-        ModelDTO modelDTO = (ModelDTO) o;
         if (this.id == null) {
             return false;
         }

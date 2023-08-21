@@ -11,13 +11,13 @@ import java.util.Objects;
 public class MedicationDTO implements Serializable {
 
     @Pattern(regexp = "^[A-Z0-9_]+$")
+    @NotNull(message = "Code is required")
     private String code;
 
     @Pattern(regexp = "^[a-zA-Z_0-9-]+$")
     private String name;
 
     private Long weight;
-
     private String picture;
 
     public String getCode() {
@@ -57,11 +57,10 @@ public class MedicationDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof MedicationDTO)) {
+        if (!(o instanceof MedicationDTO medicationDTO)) {
             return false;
         }
 
-        MedicationDTO medicationDTO = (MedicationDTO) o;
         if (this.code == null) {
             return false;
         }

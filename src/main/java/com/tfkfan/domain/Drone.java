@@ -39,7 +39,7 @@ public class Drone implements Serializable, Persistable<String> {
     @Transient
     private boolean isPersisted;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "drone")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "drone", cascade = CascadeType.ALL)
     private Set<MedicationLoad> medicationLoads = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

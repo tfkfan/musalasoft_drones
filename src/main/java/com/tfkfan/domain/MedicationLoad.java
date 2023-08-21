@@ -20,23 +20,23 @@ public class MedicationLoad implements Serializable {
     @EmbeddedId
     private MedicationLoadKey id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId("droneId")
     private Drone drone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId("medicationCode")
     private Medication medication;
 
     @Column(name = "medication_quantity", nullable = false)
-    private Long medicationQuantity;
+    private Long quantity;
 
     public MedicationLoad() {}
 
-    public MedicationLoad(Drone drone, Medication medication, Long medicationQuantity) {
+    public MedicationLoad(Drone drone, Medication medication, Long quantity) {
         this.drone = drone;
         this.medication = medication;
-        this.medicationQuantity = medicationQuantity;
+        this.quantity = quantity;
         this.id = new MedicationLoadKey(drone.getId(), medication.getId());
     }
 
@@ -56,12 +56,12 @@ public class MedicationLoad implements Serializable {
         this.medication = medication;
     }
 
-    public Long getMedicationQuantity() {
-        return medicationQuantity;
+    public Long getQuantity() {
+        return quantity;
     }
 
-    public void setMedicationQuantity(Long medicationQuantity) {
-        this.medicationQuantity = medicationQuantity;
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 
     public Drone getDrone() {
