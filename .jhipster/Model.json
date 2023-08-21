@@ -1,0 +1,32 @@
+{
+  "applications": ["DroneFactory"],
+  "changelogDate": "20230821085224",
+  "clientRootFolder": "DroneFactory",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "model",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "weightLimit",
+      "fieldType": "Long"
+    }
+  ],
+  "microserviceName": "DroneFactory",
+  "name": "Model",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "drone",
+      "otherEntityRelationshipName": "id",
+      "relationshipName": "drone",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

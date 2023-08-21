@@ -1,0 +1,53 @@
+{
+  "applications": ["DroneFactory"],
+  "changelogDate": "20230821085225",
+  "clientRootFolder": "DroneFactory",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "drone",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "100",
+      "fieldValidateRulesMinlength": "1",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "weight",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "batteryCharge",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "State",
+      "fieldValues": "IDLE,LOADING,LOADED,DELIVERING,DELIVERED,RETURNING"
+    }
+  ],
+  "microserviceName": "DroneFactory",
+  "name": "Drone",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "medication",
+      "otherEntityRelationshipName": "code",
+      "relationshipName": "id",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "model",
+      "relationshipName": "id",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

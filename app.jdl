@@ -1,0 +1,46 @@
+application {
+  config {
+    baseName DroneFactory,
+    applicationType microservice,
+    packageName com.tfkfan,
+    authenticationType jwt,
+    devDatabaseType postgresql,
+    prodDatabaseType postgresql
+  }
+  entities *
+}
+
+enum State {
+ IDLE, LOADING, LOADED, DELIVERING, DELIVERED, RETURNING
+}
+
+entity Model {
+	title String,
+    weightLimit Long
+}
+
+entity Drone {
+	@Id id String  minlength(1) maxlength(100),
+    weight Long,
+    batteryCharge Integer,
+    state State
+}
+
+entity Medication {
+    @Id code String pattern(/^[A-Z0-9_]+$/),
+	name String  pattern(/^[a-zA-Z_0-9-]+$/),
+    weight Long,
+    picture String
+}
+
+relationship OneToMany {
+  Model to Drone{id}
+}
+relationship OneToMany {
+  Drone{id} to Medication{code}
+}
+
+paginate * with pagination
+dto * with mapstruct
+service * with serviceImpl
+
