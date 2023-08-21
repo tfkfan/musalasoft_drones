@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface DroneRepository extends JpaRepository<Drone, String> {
-    List<Drone> findAllByState(State state);
+    List<Drone> findAllByStateAndBatteryChargeGreaterThanEqual(State state, Integer batteryCharge);
 }

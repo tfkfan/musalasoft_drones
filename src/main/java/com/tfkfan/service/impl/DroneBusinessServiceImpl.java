@@ -130,6 +130,10 @@ public class DroneBusinessServiceImpl implements DroneBusinessService {
     @Transactional(readOnly = true)
     public List<DroneDTO> findAllAvailable() {
         log.debug("Request to get all available Drones");
-        return droneRepository.findAllByState(State.IDLE).stream().map(droneMapper::toDto).collect(Collectors.toList());
+        return droneRepository
+            .findAllByStateAndBatteryChargeGreaterThanEqual(State.IDLE, Constants.LOW_CHARGE_THRESHOLD)
+            .stream()
+            .map(droneMapper::toDto)
+            .collect(Collectors.toList());
     }
 }
