@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity MedicationLoad.
+    -->
+
+    <changeSet id="20230821085226-1" author="jhipster">
+        <createTable tableName="drone_battery_log">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="drone_id" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="battery_charge" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="managed_by" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timestamp" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20230821085226-2" author="jhipster">
+        <addForeignKeyConstraint baseColumnNames="drone_id"
+                                 baseTableName="drone_battery_log"
+                                 constraintName="fk_drone_battery_log_drone_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="drone"
+        />
+    </changeSet>
+</databaseChangeLog>

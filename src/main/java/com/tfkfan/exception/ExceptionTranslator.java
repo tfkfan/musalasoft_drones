@@ -34,16 +34,7 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException ex) {
         logger.error(ex);
-        List<ErrorVM> errors = new ArrayList<>();
-        errors.add(new CommonErrorVM(ex.getMessage(), ex.getCode()));
-        errors.addAll(
-            Arrays
-                .stream(ex.getSuppressed())
-                .map(th -> new CommonErrorVM(th.getMessage(), ExceptionDictionary.INTERNAL_SERVER_ERROR.getCode()))
-                .toList()
-        );
-
-        return ResponseEntity.status(ex.getStatus()).body(new ErrorsVM(ex.getMessage(), ex.getCode(), errors));
+        return ResponseEntity.status(ex.getStatus()).body(new ErrorsVM(createErrors(ex)));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -52,24 +43,18 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
         logger.error(root);
         List<ErrorVM> errors = new ArrayList<>();
 
-        String message;
         if (root instanceof PSQLException && ((PSQLException) root).getSQLState().equals(ExceptionConstants.ALREADY_EXISTS_STATE)) {
-            message = ExceptionConstants.formatConstraintMessage(ex.getMessage());
-            errors.add(new CommonErrorVM(root.getMessage(), ExceptionDictionary.ENTITY_ALREADY_EXISTS.getCode()));
-        } else {
-            message = ex.getMessage();
-            errors.add(new CommonErrorVM(ex.getMessage(), ExceptionDictionary.INTERNAL_SERVER_ERROR.getCode()));
-            errors.addAll(
-                Arrays
-                    .stream(ex.getSuppressed())
-                    .map(th -> new CommonErrorVM(th.getMessage(), ExceptionDictionary.INTERNAL_SERVER_ERROR.getCode()))
-                    .toList()
+            errors.add(
+                new CommonErrorVM(
+                    ExceptionConstants.formatConstraintMessage(ex.getMessage()),
+                    ExceptionDictionary.ENTITY_ALREADY_EXISTS.getCode()
+                )
             );
+        } else {
+            errors.addAll(createErrors(ex));
         }
 
-        return ResponseEntity
-            .status(ExceptionDictionary.INTERNAL_SERVER_ERROR.getStatus())
-            .body(new ErrorsVM(message, ExceptionDictionary.INTERNAL_SERVER_ERROR.getCode(), errors));
+        return ResponseEntity.status(ExceptionDictionary.INTERNAL_SERVER_ERROR.getStatus()).body(new ErrorsVM(errors));
     }
 
     @Override
@@ -81,36 +66,43 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
     ) {
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
-        ValidationErrorVM errors = new ValidationErrorVM();
+        ValidationErrorVM errors = new ValidationErrorVM(
+            ExceptionDictionary.VALIDATION_ERROR.getDefaultMessage(),
+            ExceptionDictionary.VALIDATION_ERROR.getCode()
+        );
         for (FieldError fieldError : fieldErrors) {
             errors.addFieldError(fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
         }
-        return ResponseEntity
-            .status(ExceptionDictionary.VALIDATION_ERROR.getStatus())
-            .body(
-                new ErrorsVM(
-                    ExceptionDictionary.VALIDATION_ERROR.getDefaultMessage(),
-                    ExceptionDictionary.VALIDATION_ERROR.getCode(),
-                    errors
-                )
-            );
+        return ResponseEntity.status(ExceptionDictionary.VALIDATION_ERROR.getStatus()).body(new ErrorsVM(errors));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAnyException(Exception ex) {
         logger.error(ex);
+        return ResponseEntity.status(ExceptionDictionary.INTERNAL_SERVER_ERROR.getStatus()).body(new ErrorsVM(createErrors(ex)));
+    }
 
+    private List<ErrorVM> createErrors(Exception ex) {
         List<ErrorVM> errors = new ArrayList<>();
-        errors.add(new CommonErrorVM(ex.getMessage(), ExceptionDictionary.INTERNAL_SERVER_ERROR.getCode()));
+        errors.add(
+            new CommonErrorVM(
+                ex.getMessage(),
+                (ex instanceof BusinessException) ? ((BusinessException) ex).getCode() : ExceptionDictionary.INTERNAL_SERVER_ERROR.getCode()
+            )
+        );
         errors.addAll(
             Arrays
                 .stream(ex.getSuppressed())
-                .map(th -> new CommonErrorVM(th.getMessage(), ExceptionDictionary.INTERNAL_SERVER_ERROR.getCode()))
+                .map(th ->
+                    new CommonErrorVM(
+                        th.getMessage(),
+                        (ex instanceof BusinessException)
+                            ? ((BusinessException) th).getCode()
+                            : ExceptionDictionary.INTERNAL_SERVER_ERROR.getCode()
+                    )
+                )
                 .toList()
         );
-
-        return ResponseEntity
-            .status(ExceptionDictionary.INTERNAL_SERVER_ERROR.getStatus())
-            .body(new ErrorsVM(ex.getMessage(), ExceptionDictionary.INTERNAL_SERVER_ERROR.getCode(), errors));
+        return errors;
     }
 }

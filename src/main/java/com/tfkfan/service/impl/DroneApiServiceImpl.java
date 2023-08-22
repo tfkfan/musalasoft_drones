@@ -80,7 +80,8 @@ public class DroneApiServiceImpl implements DroneApiService {
         if (drone.getBatteryCharge() < Constants.LOW_CHARGE_THRESHOLD) throw new BatteryChargeIsLowException();
 
         drone.setState(State.LOADING);
-        /* Incorrect if need to rollback that lines due to exception below(if drone overloaded) in main 'load' method.
+        /*
+        Incorrect if need to rollback that lines due to exception below(if drone overloaded) in main 'load' method.
          Possibly nested transaction is a quick solution but hibernate and standard jpa instruments
          don't support this option and save-points. As It seems manual transaction management is required here
          */

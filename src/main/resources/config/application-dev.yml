@@ -120,4 +120,5 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 application:
-  defaultModelWeightLimit: 500
+  battery-log-interval: 30000
+  default-model-weight-limit: 500

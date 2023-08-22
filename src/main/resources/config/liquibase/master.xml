@@ -15,6 +15,7 @@
     <include file="config/liquibase/changelog/20230821085225_added_entity_Drone.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230821085226_added_entity_Medication.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230821085226_added_entity_MedicationLoad.xml" relativeToChangelogFile="false"/>
-   <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/20230821085226_added_entity_DroneBatteryLog.xml" relativeToChangelogFile="false" />
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

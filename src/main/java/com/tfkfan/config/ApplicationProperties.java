@@ -15,6 +15,7 @@ public class ApplicationProperties {
     // jhipster-needle-application-properties-property-getter
     // jhipster-needle-application-properties-property-class
     private Long defaultModelWeightLimit;
+    private Long batteryLogInterval;
 
     public Long getDefaultModelWeightLimit() {
         return defaultModelWeightLimit;
@@ -22,5 +23,13 @@ public class ApplicationProperties {
 
     public void setDefaultModelWeightLimit(Long defaultModelWeightLimit) {
         this.defaultModelWeightLimit = defaultModelWeightLimit;
+    }
+
+    public Long getBatteryLogInterval() {
+        return batteryLogInterval;
+    }
+
+    public void setBatteryLogInterval(Long batteryLogInterval) {
+        this.batteryLogInterval = batteryLogInterval;
     }
 }

@@ -12,6 +12,7 @@ public class CommonErrorVM implements ErrorVM {
         this.message = message;
     }
 
+    @Override
     public String getCode() {
         return code;
     }
@@ -20,6 +21,7 @@ public class CommonErrorVM implements ErrorVM {
         this.code = code;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }

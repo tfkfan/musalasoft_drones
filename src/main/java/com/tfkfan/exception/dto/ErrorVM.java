@@ -1,3 +1,6 @@
 package com.tfkfan.exception.dto;
 
-public interface ErrorVM {}
+public interface ErrorVM {
+    String getCode();
+    String getMessage();
+}
