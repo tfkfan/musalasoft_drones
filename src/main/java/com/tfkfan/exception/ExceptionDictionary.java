@@ -4,6 +4,9 @@ import com.tfkfan.config.Constants;
 import org.springframework.http.HttpStatus;
 
 public enum ExceptionDictionary {
+    INTERNAL_SERVER_ERROR("Internal server error occured", "InternalServerErrorException", HttpStatus.INTERNAL_SERVER_ERROR),
+    ENTITY_ALREADY_EXISTS("%s entity already exists", "EntityAlreadyExists", HttpStatus.INTERNAL_SERVER_ERROR),
+    VALIDATION_ERROR("Validation error occured", "ValidationErrorException", HttpStatus.BAD_REQUEST),
     DRONE_NOT_FOUND("Drone with the given serial number not found", "DroneNotFoundException", HttpStatus.NOT_FOUND),
     DRONE_IS_BUSY("Drone is not available for load/delivery", "DroneIsBusyException", HttpStatus.BAD_REQUEST),
     DRONE_IS_OVERLOADED("Drone is overloaded with the given items", "DroneIsOverloadedException", HttpStatus.BAD_REQUEST),

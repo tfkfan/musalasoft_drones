@@ -1,6 +1,6 @@
 {
   "applications": ["DroneFactory"],
-  "changelogDate": "20230821085225",
+  "changelogDate": "20230821120100",
   "clientRootFolder": "DroneFactory",
   "databaseType": "sql",
   "dto": "mapstruct",
@@ -35,9 +35,9 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "medication",
+      "otherEntityName": "medicationLoad",
       "otherEntityRelationshipName": "drone",
-      "relationshipName": "medication",
+      "relationshipName": "medicationLoad",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },

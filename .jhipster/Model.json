@@ -1,6 +1,6 @@
 {
   "applications": ["DroneFactory"],
-  "changelogDate": "20230821085224",
+  "changelogDate": "20230821120059",
   "clientRootFolder": "DroneFactory",
   "databaseType": "sql",
   "dto": "mapstruct",

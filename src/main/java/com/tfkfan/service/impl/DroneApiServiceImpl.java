@@ -10,11 +10,12 @@ import com.tfkfan.exception.DroneIsOverloadedException;
 import com.tfkfan.exception.DroneNotFoundException;
 import com.tfkfan.repository.DroneRepository;
 import com.tfkfan.repository.MedicationRepository;
-import com.tfkfan.service.DroneBusinessService;
+import com.tfkfan.service.DroneApiService;
 import com.tfkfan.service.DroneService;
 import com.tfkfan.service.dto.DroneDTO;
 import com.tfkfan.service.dto.LoadDTO;
 import com.tfkfan.service.dto.MedicationLoadDTO;
+import com.tfkfan.service.dto.RegisterDroneDTO;
 import com.tfkfan.service.mapper.DroneMapper;
 import com.tfkfan.service.mapper.MedicationLoadMapper;
 import com.tfkfan.service.mapper.MedicationMapper;
@@ -30,9 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class DroneBusinessServiceImpl implements DroneBusinessService {
+public class DroneApiServiceImpl implements DroneApiService {
 
-    private final Logger log = LoggerFactory.getLogger(DroneBusinessServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(DroneApiServiceImpl.class);
 
     private final DroneRepository droneRepository;
 
@@ -45,7 +46,7 @@ public class DroneBusinessServiceImpl implements DroneBusinessService {
 
     private final DroneService droneService;
 
-    public DroneBusinessServiceImpl(
+    public DroneApiServiceImpl(
         MedicationRepository medicationRepository,
         MedicationMapper medicationMapper,
         MedicationLoadMapper medicationLoadMapper,
@@ -62,7 +63,7 @@ public class DroneBusinessServiceImpl implements DroneBusinessService {
     }
 
     @Override
-    public DroneDTO register(DroneDTO droneDTO) {
+    public DroneDTO register(RegisterDroneDTO droneDTO) {
         log.debug("Request to save Drone : {}", droneDTO);
         Drone drone = droneMapper.toEntity(droneDTO);
         drone.setState(State.IDLE);

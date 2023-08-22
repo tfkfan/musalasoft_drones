@@ -1,13 +1,11 @@
 package com.tfkfan.web.rest;
 
-import com.tfkfan.exception.BadRequestAlertException;
 import com.tfkfan.repository.ModelRepository;
 import com.tfkfan.service.ModelService;
 import com.tfkfan.service.dto.ModelDTO;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,9 +53,6 @@ public class ModelResource {
     @PostMapping("/models")
     public ResponseEntity<ModelDTO> createModel(@RequestBody ModelDTO modelDTO) throws URISyntaxException {
         log.debug("REST request to save Model : {}", modelDTO);
-        if (modelDTO.getId() != null) {
-            throw new BadRequestAlertException("A new model cannot already have an ID", ENTITY_NAME, "idexists");
-        }
         ModelDTO result = modelService.save(modelDTO);
         return ResponseEntity
             .created(new URI("/api/models/" + result.getId()))
@@ -81,17 +76,6 @@ public class ModelResource {
         @RequestBody ModelDTO modelDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Model : {}, {}", id, modelDTO);
-        if (modelDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, modelDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!modelRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
         ModelDTO result = modelService.update(modelDTO);
         return ResponseEntity
             .ok()
@@ -116,17 +100,6 @@ public class ModelResource {
         @RequestBody ModelDTO modelDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Model partially : {}, {}", id, modelDTO);
-        if (modelDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, modelDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!modelRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
         Optional<ModelDTO> result = modelService.partialUpdate(modelDTO);
 
         return ResponseUtil.wrapOrNotFound(

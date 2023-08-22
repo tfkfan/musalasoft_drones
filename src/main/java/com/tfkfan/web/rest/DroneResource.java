@@ -1,9 +1,10 @@
 package com.tfkfan.web.rest;
 
-import com.tfkfan.service.DroneBusinessService;
+import com.tfkfan.service.DroneApiService;
 import com.tfkfan.service.dto.DroneDTO;
 import com.tfkfan.service.dto.LoadDTO;
 import com.tfkfan.service.dto.MedicationLoadDTO;
+import com.tfkfan.service.dto.RegisterDroneDTO;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,16 +30,16 @@ public class DroneResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final DroneBusinessService droneBusinessService;
+    private final DroneApiService droneApiService;
 
-    public DroneResource(DroneBusinessService droneBusinessService) {
-        this.droneBusinessService = droneBusinessService;
+    public DroneResource(DroneApiService droneApiService) {
+        this.droneApiService = droneApiService;
     }
 
     @PostMapping
-    public ResponseEntity<DroneDTO> registerDrone(@Valid @RequestBody DroneDTO droneDTO) throws URISyntaxException {
+    public ResponseEntity<DroneDTO> registerDrone(@Valid @RequestBody RegisterDroneDTO droneDTO) throws URISyntaxException {
         log.debug("REST request to save Drone : {}", droneDTO);
-        DroneDTO result = droneBusinessService.register(droneDTO);
+        DroneDTO result = droneApiService.register(droneDTO);
         return ResponseEntity
             .created(new URI("/api/drones/" + result.getSerialNumber()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getSerialNumber()))
@@ -48,7 +49,7 @@ public class DroneResource {
     @PostMapping("/load/{id}")
     public ResponseEntity<DroneDTO> loadDrone(@PathVariable String id, @Valid @RequestBody LoadDTO dto) {
         log.debug("REST request to load Drone {} : {}", id, dto);
-        DroneDTO result = droneBusinessService.load(id, dto);
+        DroneDTO result = droneApiService.load(id, dto);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getSerialNumber()))
@@ -57,16 +58,16 @@ public class DroneResource {
 
     @GetMapping("/load/{id}")
     public ResponseEntity<List<MedicationLoadDTO>> getDroneBurden(@PathVariable String id) {
-        return ResponseEntity.ok().body(droneBusinessService.findByDroneId(id));
+        return ResponseEntity.ok().body(droneApiService.findByDroneId(id));
     }
 
     @GetMapping("/available")
     public ResponseEntity<List<DroneDTO>> getAvailableDrones() {
-        return ResponseEntity.ok().body(droneBusinessService.findAllAvailable());
+        return ResponseEntity.ok().body(droneApiService.findAllAvailable());
     }
 
     @GetMapping("/charge/{id}")
     public ResponseEntity<Integer> getDroneBatteryCharge(@PathVariable String id) {
-        return ResponseEntity.ok().body(droneBusinessService.getDrone(id).getBatteryCharge());
+        return ResponseEntity.ok().body(droneApiService.getDrone(id).getBatteryCharge());
     }
 }

@@ -33,11 +33,19 @@ entity Medication {
     picture String
 }
 
+entity MedicationLoad {
+   quantity Long
+}
+
 relationship OneToMany {
   Model to Drone
 }
 relationship OneToMany {
-  Drone to Medication
+  Drone to MedicationLoad
+}
+
+relationship OneToMany {
+    Medication to MedicationLoad
 }
 
 paginate * with pagination
