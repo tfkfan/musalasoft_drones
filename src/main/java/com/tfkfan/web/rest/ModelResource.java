@@ -1,9 +1,9 @@
 package com.tfkfan.web.rest;
 
+import com.tfkfan.exception.BadRequestAlertException;
 import com.tfkfan.repository.ModelRepository;
 import com.tfkfan.service.ModelService;
 import com.tfkfan.service.dto.ModelDTO;
-import com.tfkfan.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;

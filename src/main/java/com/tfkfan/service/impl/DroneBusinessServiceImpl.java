@@ -4,6 +4,10 @@ import com.tfkfan.config.Constants;
 import com.tfkfan.domain.Drone;
 import com.tfkfan.domain.MedicationLoad;
 import com.tfkfan.domain.enumeration.State;
+import com.tfkfan.exception.BatteryChargeIsLowException;
+import com.tfkfan.exception.DroneIsBusyException;
+import com.tfkfan.exception.DroneIsOverloadedException;
+import com.tfkfan.exception.DroneNotFoundException;
 import com.tfkfan.repository.DroneRepository;
 import com.tfkfan.repository.MedicationRepository;
 import com.tfkfan.service.DroneBusinessService;
@@ -68,16 +72,14 @@ public class DroneBusinessServiceImpl implements DroneBusinessService {
 
     @Override
     public DroneDTO load(String droneSerialNumber, LoadDTO loadDTO) {
-        final Drone drone = droneRepository.findById(droneSerialNumber).orElseThrow(() -> new RuntimeException("Drone not found"));
+        final Drone drone = droneRepository.findById(droneSerialNumber).orElseThrow(DroneNotFoundException::new);
 
-        if (!State.IDLE.equals(drone.getState())) throw new RuntimeException("Drone is not available for load");
+        if (!State.IDLE.equals(drone.getState())) throw new DroneIsBusyException();
 
-        if (drone.getBatteryCharge() < Constants.LOW_CHARGE_THRESHOLD) throw new RuntimeException(
-            String.format("Battery charge is lower than %s percents", Constants.LOW_CHARGE_THRESHOLD)
-        );
+        if (drone.getBatteryCharge() < Constants.LOW_CHARGE_THRESHOLD) throw new BatteryChargeIsLowException();
 
         drone.setState(State.LOADING);
-        /* Incorrect if need to rollback that lines due to exception below in main 'load' method.
+        /* Incorrect if need to rollback that lines due to exception below(if drone overloaded) in main 'load' method.
          Possibly nested transaction is a quick solution but hibernate and standard jpa instruments
          don't support this option and save-points. As It seems manual transaction management is required here
          */
@@ -103,7 +105,7 @@ public class DroneBusinessServiceImpl implements DroneBusinessService {
             drone.getWeight() +
             drone.getMedicationLoads().stream().map(e -> e.getQuantity() * e.getMedication().getWeight()).reduce(0L, Long::sum);
 
-        if (currentWeight > drone.getModel().getWeightLimit()) throw new RuntimeException("Drone is overloaded");
+        if (currentWeight > drone.getModel().getWeightLimit()) throw new DroneIsOverloadedException();
 
         drone.setState(State.LOADED);
         return droneMapper.toDto(droneRepository.save(drone));
@@ -112,17 +114,12 @@ public class DroneBusinessServiceImpl implements DroneBusinessService {
     @Override
     public DroneDTO getDrone(String serialNumber) {
         log.debug("Request to get Drone : {}", serialNumber);
-        return droneRepository
-            .findById(serialNumber)
-            .map(droneMapper::toDto)
-            .orElseThrow(() -> new RuntimeException("Drone with the given serial number not found"));
+        return droneRepository.findById(serialNumber).map(droneMapper::toDto).orElseThrow(DroneNotFoundException::new);
     }
 
     @Override
     public List<MedicationLoadDTO> findByDroneId(String serialNumber) {
-        Drone drone = droneRepository
-            .findById(serialNumber)
-            .orElseThrow(() -> new RuntimeException("Drone with the given serial number not found"));
+        Drone drone = droneRepository.findById(serialNumber).orElseThrow(DroneNotFoundException::new);
         return drone.getMedicationLoads().stream().map(medicationLoadMapper::toDto).collect(Collectors.toList());
     }
 

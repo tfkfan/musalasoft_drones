@@ -1,4 +1,4 @@
-package com.tfkfan.web.rest.errors;
+package com.tfkfan.exception;
 
 import java.io.Serializable;
 

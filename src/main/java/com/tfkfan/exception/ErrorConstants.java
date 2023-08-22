@@ -1,9 +1,10 @@
-package com.tfkfan.web.rest.errors;
+package com.tfkfan.exception;
 
 import java.net.URI;
 
 public final class ErrorConstants {
 
+    /*JHipster errors */
     public static final String ERR_CONCURRENCY_FAILURE = "error.concurrencyFailure";
     public static final String ERR_VALIDATION = "error.validation";
     public static final String PROBLEM_BASE_URL = "https://www.jhipster.tech/problem";

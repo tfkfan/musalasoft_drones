@@ -120,9 +120,9 @@ spring:
       ddl-auto: none
   main:
     allow-bean-definition-overriding: true
-  mvc:
-    problemdetails:
-      enabled: true
+  #mvc:
+  #  problemdetails:
+  #    enabled: true
   task:
     execution:
       thread-name-prefix: drone-factory-task-
